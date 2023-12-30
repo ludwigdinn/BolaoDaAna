@@ -3,70 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>Bolão da Ana</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    p#resultado {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-
-body {
-  font-family: 'Permanent Marker', cursive;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover {
-  background-color: #2980b9;
-}
-
-p#resultado {
-  margin-top: 20px;
-  font-weight: bold;
-}
-</style>
 <body>
   <div class="container">
     <h1>Bolão da Ana</h1>
+    <p>Nome do participante:</p>
+    <input type="text" id="nomeParticipante">
     <p>Escolha um dia:</p>
     <input type="date" id="dataEscolhida">
     <button onclick="confirmarData()">Confirmar</button>
     <p id="resultado"></p>
+    <div id="historico"></div>
   </div>
 
-  <script src="script.js"></script>
-</body>
-<script>
-function confirmarData() {
-  var dataEscolhida = document.getElementById('dataEscolhida').value;
-  var resultado = document.getElementById('resultado');
+  <script>
+    function confirmarData() {
+      var nomeParticipante = document.getElementById('nomeParticipante').value;
+      var dataEscolhida = document.getElementById('dataEscolhida').value;
+      var resultado = document.getElementById('resultado');
+      var historico = document.getElementById('historico');
 
-  if (dataEscolhida !== '') {
-    resultado.textContent = 'Você escolheu o dia ' + dataEscolhida + ' para o bolão da Ana!';
-  } else {
-    resultado.textContent = 'Por favor, escolha um dia para participar do bolão.';
-  }
-}
-</script>
+      if (nomeParticipante !== '' && dataEscolhida !== '') {
+        var participante = {
+          nome: nomeParticipante,
+          data: dataEscolhida
+        };
+
+        resultado.textContent = 'Você escolheu o dia ' + dataEscolhida + ' para o bolão da Ana!';
+
+        // Simulating previous participant choices
+        var historicoParticipantes = [
+          { nome: 'João', data: '2023-12-28' },
+          { nome: 'Maria', data: '2023-12-25' },
+          // ... other participant choices
+        ];
+
+        historico.innerHTML = '<h2>Histórico de Escolhas:</h2>';
+        historicoParticipantes.forEach(participante => {
+          historico.innerHTML += '<p>' + participante.nome + ' escolheu o dia ' + participante.data + '</p>';
+        });
+
+      } else {
+        resultado.textContent = 'Por favor, preencha todos os campos.';
+      }
+    }
+  </script>
+</body>
 </html>
